@@ -39,11 +39,8 @@ while True:
             camera.wait_recording(15)
             camera.stop_recording()
             if output.motionDetected == True:
-                print("potential bird detected")                
                 cp = subprocess.run(["rm /home/pi/Desktop/isitabirdvideo.mp4"],shell=True)
                 cp = subprocess.run(["MP4Box -add /home/pi/Desktop/isitabirdvideo.h264 /home/pi/Desktop/isitabirdvideo.mp4"],shell=True)
                 video = open('/home/pi/Desktop/isitabirdvideo.mp4', 'rb')
                 response = twitter.upload_video(media=video, media_type='video/mp4')
                 twitter.update_status(status='Birdbot activated: is this a bird? Do you know what type?', media_ids=[response['media_id']])                
-            if output.motionDetected == False:
-                print("no potential bird detected")
